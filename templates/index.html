@@ -1,36 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Map Quiz</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css">
     <style>
-        :root {
-            --dark-purple: #756AB6;
-            --light-purple: #AC87C5;
-            --plink: #E0AED0;
-            --pink: #FFE5E5;
-        }
-
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            overflow: hidden; /* Hide any overflow to prevent scrolling */
+            display: flex; /* Use flexbox to center the map */
+            flex-direction: column; /* Set flex direction to column */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            background-color: #756AB6; /* Set background color */
         }
-
         #map {
-            width: 100vw;
-            height: calc(100vh - 50px); /* Adjust height to account for the navbar */
+            width: 100vw; /* Set width to 100% of the viewport width */
+            height: 100vh; /* Set height to 100% of the viewport height */
+            background-color: #756AB6; /* Set background color of the map */
         }
-
         .navbar {
             width: 100%;
-            background-color: var(--dark-purple);
-            color: white;
+            background-color: var(--dark-purple); /* Set navbar background color */
+            color: white; /* Set navbar text color */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -39,15 +32,13 @@
             top: 0;
             left: 0;
             z-index: 1000;
-            border-bottom: 2px solid var(--light-purple);
+            border-bottom: 2px solid var(--light-purple); /* Add border to bottom */
         }
-
         .navbar-title {
-            font-size: 36px;
-            font-weight: bold;
-            margin: 0;
+            font-size: 36px; /* Increase font size */
+            font-weight: bold; /* Make font bold */
+            margin: 0; /* Remove default margin */
         }
-
         .help-button {
             background-color: var(--light-purple);
             color: white;
@@ -55,156 +46,25 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 20px;
-        }
-
-        .help-button:hover {
-            background-color: var(--plink);
-        }
-
-        .leaflet-popup-content {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .popup-content {
-            display: flex;
-            flex-direction: row;
-            text-align: center;
-            width: 100%;
-        }
-
-        .popup-content img {
-            max-width: 50%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .popup-text {
-            text-align: left;
-            margin-left: 10px;
-            flex: 1;
-        }
-
-        .popup-content form {
-            margin-top: 20px;
-        }
-
-        .popup-content button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .popup-content button:hover {
-            background-color: #45a049;
-        }
-
-        .popup-content #result {
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-        .popup-close-btn {
-            background-color: #f44336;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .popup-close-btn:hover {
-            background-color: #d32f2f;
+            margin: 0 10px; /* Add margin */
+            border: 2px solid var(--light-purple); /* Add border */
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="navbar-title">H<span style="color: pink;">E</span>R<span style="color: pink;">A</span></div>
+        <div class="navbar-title">Mrs WorldWide</div>
         <button class="help-button" onclick="showHelp()">Help</button>
     </div>
 
     <div id="map"></div>
 
+    <!-- Include Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Your custom JavaScript -->
+    <script src="{{ url_for('static', filename='map.js') }}"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize the map
-            var map = L.map('map', {
-                center: [0, 0],
-                zoom: 2,
-                zoomControl: false
-            });
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            // Define marker positions and custom icon
-            var continents = {
-                'North America': [40, -100]
-            };
-
-            var customIcon = L.icon({
-                iconUrl: '/static/images/Map_marker_V2.png',
-                iconSize: [64, 64],
-                popupAnchor: [0, -16]
-            });
-
-            // Add markers with custom popups
-            for (var continent in continents) {
-                var marker = L.marker(continents[continent], { icon: customIcon }).addTo(map);
-                marker.on('click', function () {
-                    var popupContent = `
-                        <div class="popup-content">
-                            <img src="{{ image_url }}" alt="Popup Image">
-                            <div class="popup-text">
-                                <p>{{ answer }}</p>
-                                <form id="quizForm">
-                                    {% for option in options %}
-                                        <input type="radio" id="{{ option.lower() }}" name="capital" value="{{ option.lower() }}">
-                                        <label for="{{ option.lower() }}">{{ option }}</label><br>
-                                    {% endfor %}
-                                    <button type="button" onclick="checkAnswer()">Submit</button>
-                                </form>
-                                <button class="popup-close-btn" onclick="closePopup()">Close</button>
-                                <p id="result"></p>
-                            </div>
-                        </div>
-                    `;
-                    marker.bindPopup(popupContent).openPopup();
-                });
-            }
-
-            function closePopup() {
-                map.closePopup();
-            }
-
-            window.checkAnswer = function () {
-                var selectedAnswer = document.querySelector('input[name="capital"]:checked');
-                var correctAnswer = "{{ answer }}".toLowerCase();
-
-                if (selectedAnswer) {
-                    var answer = selectedAnswer.value;
-
-                    if (answer === correctAnswer) {
-                        document.getElementById('result').textContent = 'Correct! ' + correctAnswer.charAt(0).toUpperCase() + correctAnswer.slice(1) + ' is the right answer.';
-                    } else {
-                        document.getElementById('result').textContent = 'Incorrect. Please try again.';
-                    }
-                } else {
-                    document.getElementById('result').textContent = 'Please select an answer.';
-                }
-            }
-        });
-
         function showHelp() {
             alert("This is Mrs WorldWide map! Explore different continents by clicking on the markers.");
         }
