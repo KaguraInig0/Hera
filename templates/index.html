@@ -10,6 +10,7 @@
             height: 100%;
             overflow: hidden; /* Hide any overflow to prevent scrolling */
             display: flex; /* Use flexbox to center the map */
+            flex-direction: column; /* Set flex direction to column */
             justify-content: center; /* Center horizontally */
             align-items: center; /* Center vertically */
             background-color: #756AB6; /* Set background color */
@@ -19,14 +20,54 @@
             height: 100vh; /* Set height to 100% of the viewport height */
             background-color: #756AB6; /* Set background color of the map */
         }
+        .navbar {
+            width: 100%;
+            background-color: var(--dark-purple); /* Set navbar background color */
+            color: white; /* Set navbar text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--light-purple); /* Add border to bottom */
+        }
+        .navbar-title {
+            font-size: 36px; /* Increase font size */
+            font-weight: bold; /* Make font bold */
+            margin: 0; /* Remove default margin */
+        }
+        .help-button {
+            background-color: var(--light-purple);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px; /* Add margin */
+            border: 2px solid var(--light-purple); /* Add border */
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <div class="navbar-title">Mrs WorldWide</div>
+        <button class="help-button" onclick="showHelp()">Help</button>
+    </div>
+
     <div id="map"></div>
 
     <!-- Include Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Your custom JavaScript -->
     <script src="{{ url_for('static', filename='map.js') }}"></script>
+
+    <script>
+        function showHelp() {
+            alert("This is Mrs WorldWide map! Explore different continents by clicking on the markers.");
+        }
+    </script>
 </body>
 </html>

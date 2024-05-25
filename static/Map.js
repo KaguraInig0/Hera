@@ -41,4 +41,15 @@ document.addEventListener('DOMContentLoaded', function () {
         var marker = L.marker(continents[continent], {icon: customIcon}).addTo(map);
         marker.bindPopup(popupContent);
     }
+
+    var bounds = L.latLngBounds(
+        L.latLng(-90, -180), // Southwest corner of the world
+        L.latLng(90, 180)    // Northeast corner of the world
+    );
+
+    // Set maximum bounds to prevent panning outside the world
+    map.setMaxBounds(bounds);
+    map.on('drag', function() {
+        map.panInsideBounds(bounds, { animate: false });
+    });
 });
