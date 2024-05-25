@@ -30,16 +30,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Define a custom icon using your PNG asset
     var customIcon = L.icon({
-        iconUrl: '/static/images/Map_marker_V2.png', // Replace '/path/to/custom-marker.png' with the actual path to your custom marker PNG asset
-        iconSize: [64, 64], // Adjust the size of the icon as needed
-        popupAnchor: [0, -16] // Adjust the popup anchor to position it correctly relative to the icon
+        iconUrl: '/static/images/Map_marker_V2.png', // Default color
+        iconSize: [64, 64],
+        popupAnchor: [0, -16]
+    });
+    
+    var customIconHover = L.icon({
+        iconUrl: '/static/images/Map_marker_Hover_V2.png', // Hover color
+        iconSize: [64, 64],
+        popupAnchor: [0, -16]
     });
 
     // Show Continent Markers with the custom popup and custom icon
     for (var continent in continents) {
-        // Create marker with custom icon and bind popup
+        // Create marker with custom icon
         var marker = L.marker(continents[continent], {icon: customIcon}).addTo(map);
+    
+        // Bind popup
         marker.bindPopup(popupContent);
+    
+        // Change icon on hover
+        marker.on('mouseover', function(e) {
+            this.setIcon(customIconHover);
+        });
+    
+        // Change icon back to default on mouseout
+        marker.on('mouseout', function(e) {
+            this.setIcon(customIcon);
+        });
     }
 
     var bounds = L.latLngBounds(
@@ -52,4 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
     map.on('drag', function() {
         map.panInsideBounds(bounds, { animate: false });
     });
+
+    
 });
