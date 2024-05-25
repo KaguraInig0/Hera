@@ -62,12 +62,13 @@
     <!-- Include Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Your custom JavaScript -->
-    <script src="{{ url_for('static', filename='map.js') }}"></script>
+    <script src="{{ url_for('static', filename='Map.js') }}"></script>
 
     <script>
         function showHelp() {
             alert("This is Mrs WorldWide map! Explore different continents by clicking on the markers.");
         }
+        load_questions({{questions | safe }})
     </script>
 </body>
 </html>

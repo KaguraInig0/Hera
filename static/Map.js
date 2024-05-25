@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+    
+
+    
+})
+
+function load_questions(questions){
+    console.log(questions)
     // Initialize the map on the "map" div with a given center and zoom
     var map = L.map('map', {
         center: [0, 0], // Centered at (0, 0) (latitude, longitude)
@@ -21,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'Asia': [30, 100],
         'Europe': [50, 10],
         'North America': [40, -100],
-        'Oceania': [-20, 140],
+        'Australia': [-20, 140],
         'South America': [-20, -60]
     };
 
@@ -42,23 +49,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Show Continent Markers with the custom popup and custom icon
-    for (var continent in continents) {
-        // Create marker with custom icon
-        var marker = L.marker(continents[continent], {icon: customIcon}).addTo(map);
-    
-        // Bind popup
-        marker.bindPopup(popupContent);
-    
-        // Change icon on hover
-        marker.on('mouseover', function(e) {
-            this.setIcon(customIconHover);
+for (var continent in continents) {
+    // Create marker with custom icon
+    var marker = L.marker(continents[continent], {icon: customIcon}).addTo(map);
+    // Define the custom popup content
+    var popupContent = "<div class='custom-popup'>" +
+                            "<img src='" + questions[continent]['image'] + "' height='200px' alt='Continent Image'>" +
+                            "<h3>Multiple Choice Questions:</h3>" +
+                            "<ul>";
+    // Add multiple-choice questions to the popup content
+    questions[continent]['answer_bank'].forEach(function(question) {
+        popupContent += "<li>" + question + "</li>";
+    });
+
+    popupContent += "</ul>" +
+                     "<button class='popup-close-btn'>Close</button>" +
+                     "</div>";
+
+    // Bind popup
+    marker.bindPopup(popupContent);
+
+    // Change icon on hover
+    marker.on('mouseover', function(e) {
+        this.setIcon(customIconHover);
+    });
+
+    // Change icon back to default on mouseout
+    marker.on('mouseout', function(e) {
+        this.setIcon(customIcon);
+    });
+
+    // Close popup when the close button is clicked
+    marker.on('popupopen', function(e) {
+        var popup = e.popup;
+        var closeButton = document.querySelector('.popup-close-btn');
+        closeButton.addEventListener('click', function() {
+            popup.remove();
         });
-    
-        // Change icon back to default on mouseout
-        marker.on('mouseout', function(e) {
-            this.setIcon(customIcon);
-        });
-    }
+    });
+}
 
     var bounds = L.latLngBounds(
         L.latLng(-90, -180), // Southwest corner of the world
@@ -71,5 +100,4 @@ document.addEventListener('DOMContentLoaded', function () {
         map.panInsideBounds(bounds, { animate: false });
     });
 
-    
-});
+};
