@@ -5,8 +5,47 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <h1>Sure</h1>
-    <p>please</p>
-    <img src="/static/images/maps.jpg" id="map"></img>
+    <img src="/static/images/Mockup_01.png" id="map" alt="map" usemap="#workmap"></img>
+        
+        
+    <h1 popover id="pop">Get Popped</h1>
+    <button id="pop-btn" popovertarget="pop">Click me!</button>
+
+    <div id="na" class="popup">
+        <div class="popup-content">
+            <h1> :/ ! </h1>
+            <p>This is a popup box!</p>
+            <button id="closePopup" onclick="hidePopup('na')">Close</button>
+        </div>
+    </div>
+
+    <map name="workmap" id="work-map">
+        <area shape="rect" coords="200, 200, 400, 400" onclick="showPopup('na')">
+    </map>
+      
+    <script>
+    function showPopup(popupId) {
+        // alert("...");
+        var popup = document.getElementById(popupId);
+        // alert(popupId);
+        popup.style.display = "block";
+        // popup.style.left = "100px";
+        // popup.style.top = "300px";
+    }
+
+    // Function to hide pop-up
+    function hidePopup(popupId) {
+        var popup = document.getElementById(popupId);
+        popup.style.display = "none";
+    }
+
+    // Hide pop-up when clicking outside
+    window.addEventListener("click", function(event) {
+        if (!event.target.closest('.popup')) {
+        hidePopup("na");
+        }
+     });
+    </script>
+
     </body>
 </html>
