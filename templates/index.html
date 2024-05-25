@@ -1,12 +1,32 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <link rel="stylesheet" href="/static/style.css">
-    </head>
-    <body>
-        <h1>Sure</h1>
-    <p>please</p>
-    <img src="/static/images/maps.jpg" id="map"></img>
-    </body>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Hide any overflow to prevent scrolling */
+            display: flex; /* Use flexbox to center the map */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            background-color: #756AB6; /* Set background color */
+        }
+        #map {
+            width: 100vw; /* Set width to 100% of the viewport width */
+            height: 100vh; /* Set height to 100% of the viewport height */
+            background-color: #756AB6; /* Set background color of the map */
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <!-- Include Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Your custom JavaScript -->
+    <script src="{{ url_for('static', filename='map.js') }}"></script>
+</body>
 </html>
