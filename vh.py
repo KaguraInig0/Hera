@@ -9,7 +9,7 @@ def generate_q1(data, continent):
     all  = list(question_data.keys())
     all.remove(answer)
     answer_bank = all + [answer]
-    print(answer_bank)
+
     image = question_data[answer]['Image']
 
     return image, answer_bank, answer
