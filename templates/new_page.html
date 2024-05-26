@@ -1,0 +1,43 @@
+<!-- new_page.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Page</title>
+    <style>
+        /* Optional: Add some CSS for styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .image-container {
+            width: 100vw; /* Set container width to viewport width */
+            height: 100vh; /* Set container height to viewport height */
+            overflow: hidden; /* Hide overflow if image is larger than viewport */
+        }
+        img {
+            width: 100%; /* Set image width to fill container */
+            height: 100%; /* Set image height to fill container */
+            object-fit: cover; /* Maintain aspect ratio and cover entire container */
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <!-- Replace 'image.jpg' with the path to your image -->
+        <img src="static/images/Splash_Screen_V4.png" alt="Image">
+        <a href = "index.html"><button id="home-btn">Play</button></a>
+    </div>
+    
+</body>
+</html>
