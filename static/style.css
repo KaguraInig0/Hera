@@ -61,3 +61,42 @@ body, html {
             margin: 0 10px; /* Add margin */
             border: 2px solid var(--light-purple); /* Add border */
 }
+
+
+.custom-popup {
+    display: flex;
+}
+
+.popup-image {
+    flex: 1;
+}
+
+.popup-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.popup-questions {
+    flex: 1;
+}
+
+.popup-questions ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.popup-questions .choice-btn {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.popup-questions .correct {
+    background-color: green;
+    color: white;
+}
+
+.popup-questions .wrong {
+    background-color: red;
+    color: white;
+}

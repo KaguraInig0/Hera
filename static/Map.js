@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded', function () {
     
 })
 
+function clicked(cont) {
+    console.log(cont, "LSLWFLEFELFLFWE")
+}
+
+function check(ans) {
+    console.log(ans)
+}
+
 function load_questions(questions){
     console.log(questions)
     // Initialize the map on the "map" div with a given center and zoom
@@ -49,45 +57,69 @@ function load_questions(questions){
     });
 
     // Show Continent Markers with the custom popup and custom icon
-for (var continent in continents) {
-    // Create marker with custom icon
-    var marker = L.marker(continents[continent], {icon: customIcon}).addTo(map);
-    // Define the custom popup content
-    var popupContent = "<div class='custom-popup'>" +
-                            "<img src='" + questions[continent]['image'] + "' height='200px' alt='Continent Image'>" +
-                            "<h3>Multiple Choice Questions:</h3>" +
-                            "<ul>";
-    // Add multiple-choice questions to the popup content
-    questions[continent]['answer_bank'].forEach(function(question) {
-        popupContent += "<li>" + question + "</li>";
-    });
+    for (var continent in continents) {
+        var marker = L.marker(continents[continent], {icon: customIcon}).addTo(map);
+        var popupContent = "<div class='custom-popup'>" +
+                                "<div class='popup-content'>" +
+                                    "<div class='popup-image'><img src='" + questions[continent]['image'] + "' alt='Continent Image'></div>" +
+                                    "<div class='popup-questions'>" +
+                                        "<h3>Multiple Choice Questions:</h3>" +
+                                        "<ul>";
+    
+        questions[continent]['answer_bank'].forEach(function(question) {
+            popupContent += `<li><button onclick="check('${question}')"class='choice-btn'>${question}</button></li>`})
 
-    popupContent += "</ul>" +
-                     "<button class='popup-close-btn'>Close</button>" +
-                     "</div>";
+        popupContent += `    
+                </ul>
+            </div>
+        <button onclick="clicked('${continent}')" class='popup-close-btn'>Close</button>
+        </div>
+    </div>`
 
-    // Bind popup
-    marker.bindPopup(popupContent);
+    
+        marker.bindPopup(popupContent);
 
-    // Change icon on hover
-    marker.on('mouseover', function(e) {
-        this.setIcon(customIconHover);
-    });
+        marker.bindPopup(popupContent);
 
-    // Change icon back to default on mouseout
-    marker.on('mouseout', function(e) {
-        this.setIcon(customIcon);
-    });
-
-    // Close popup when the close button is clicked
-    marker.on('popupopen', function(e) {
-        var popup = e.popup;
-        var closeButton = document.querySelector('.popup-close-btn');
-        closeButton.addEventListener('click', function() {
-            popup.remove();
+        marker.on('popupopen', function(e) {
+            var popup = e.popup;
+            var tempContainer = document.createElement('div');
+            tempContainer.innerHTML = popup.getContent();
+        
+            var popupContent = tempContainer.getElementsByClassName('custom-popup')[0];
+            var choiceButtons = popupContent.getElementsByClassName('choice-btn');
+        
+            Array.from(choiceButtons).forEach(function(button) {
+                button.addEventListener('click', function() {
+                    console.log('clicked')
+                    var selectedAnswer = button.textContent.trim(); // Trim to remove extra spaces
+                    var correctAnswer = questions[continent]['person'].trim(); // Trim to remove extra spaces
+                    if (selectedAnswer === correctAnswer) {
+                        button.classList.add('correct');
+                    } else {
+                        button.classList.add('wrong');
+                    }
+                    // Disable further selection after an answer is chosen
+                    Array.from(choiceButtons).forEach(function(btn) {
+                        btn.disabled = true;
+                    });
+                });
+            });
+        
+            var closeButton = popupContent.getElementsByClassName('popup-close-btn')[0];
+            closeButton.addEventListener('click', function() {
+                popup.remove();
+            });
         });
-    });
-}
+
+        marker.on('mouseover', function(e) {
+            this.setIcon(customIconHover);
+        });
+    
+        marker.on('mouseout', function(e) {
+            this.setIcon(customIcon);
+        });
+    }
 
     var bounds = L.latLngBounds(
         L.latLng(-90, -180), // Southwest corner of the world
