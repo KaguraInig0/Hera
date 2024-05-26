@@ -8,9 +8,11 @@ function check(button, ans, correctAnswer, cont) {
   if (ans === correctAnswer) {
     // Change button color to green
     button.classList.add("correct");
+    console.log(button);
     // Disable further selection
     button.disabled = true;
     const buttons = document.querySelectorAll("#" + cont);
+    console.log(buttons);
     buttons.forEach((cbutton) => {
       cbutton.disabled = true;
     });
@@ -46,9 +48,9 @@ function load_questions(questions) {
     //'Antarctica': [-80, 0],
     Asia: [30, 100],
     Europe: [50, 10],
-    "North America": [40, -100],
+    North_America: [40, -100],
     Australia: [-20, 140],
-    "South America": [-20, -60],
+    South_America: [-20, -60],
   };
 
   // Define the custom popup content
@@ -89,6 +91,41 @@ function load_questions(questions) {
     </div>`;
 
     marker.bindPopup(popupContent);
+
+    marker.on(
+      "popupopen",
+      function (e) {
+        var popup = e.popup;
+        var tempContainer = document.createElement("div");
+        tempContainer.innerHTML = popup.getContent();
+
+        var popupContent =
+          tempContainer.getElementsByClassName("custom-popup")[0];
+        var choiceButtons = popupContent.getElementsByClassName("choice-btn");
+
+        Array.from(choiceButtons).forEach(function (button) {
+          button.addEventListener("click", function () {
+            var selectedAnswer = button.textContent.trim();
+            var correctAnswer = questions[continent]["person"].trim();
+            check(button, selectedAnswer, correctAnswer, button.id);
+          });
+        });
+
+        var closeButton =
+          popupContent.getElementsByClassName("popup-close-btn")[0];
+        closeButton.addEventListener("click", function () {
+          clicked(popup);
+        });
+      }.bind(this),
+    );
+
+    marker.on("mouseover", function (e) {
+      this.setIcon(customIconHover);
+    });
+
+    marker.on("mouseout", function (e) {
+      this.setIcon(customIcon);
+    });
   }
 
   var bounds = L.latLngBounds(

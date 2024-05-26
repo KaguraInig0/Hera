@@ -17,7 +17,7 @@ def index():
     with open('womendata.json') as f:
         data = json.load(f)
     questions = {}
-    continents = ['North America', 'Africa', 'Asia', 'Europe', 'Australia', 'South America']
+    continents = ['North_America', 'Africa', 'Asia', 'Europe', 'Australia', 'South_America']
     for continent in continents:
         image, answer_bank, answer = generate_q1(data, continent)
         questions[continent] = {'image': image, 'answer_bank': answer_bank, 'person': answer}
