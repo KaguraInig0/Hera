@@ -1,19 +1,33 @@
 from flask import Flask, render_template, Blueprint, redirect, url_for
 import json, random
 
+question_bank = [
+    "Who is she?",
+    "Where is her birth place?",
+    "What year was she born?",
+    "What are her occupations?",
+    "Which of these fun facts is about her?"
+]
+
 app = Flask(__name__, static_folder='static')
 
 def generate_q1(data, continent):
     question_data = data.get(continent, {})
-    answer = random.choice(list(question_data.keys()))
-    all  = list(question_data.keys())
-    all.remove(answer)
-    answer_bank = all + [answer]
+    player = random.choice(list(question_data.keys())) # particular person
 
-    image = question_data[answer]['Image']
+    answer_all = [player] + question_data[player]['Answers'] + [question_data[player]['Summary']]
+    answer_bank = [[] for _ in range(5)]# intitalize
+    answer_bank[0] = (list(question_data.keys())) # question 1
 
-    return image, answer_bank, answer
+    for person, values in question_data.items():
+        for i in range(4):
+            answer_bank[i+1].append(values['Answers'][i])
 
+    for answer in answer_bank:
+        random.shuffle(answer)
+    image = question_data[player]['Image']
+
+    return image, answer_bank, player, answer_all
 
 # Define a Blueprint for the new page
 home_bp = Blueprint('new_page', __name__, template_folder='templates')
@@ -37,16 +51,13 @@ def index():
     with open('womendata.json') as f:
         data = json.load(f)
     questions = {}
-    continents = ['North America', 'Africa', 'Asia', 'Europe', 'Australia', 'South America']
+    continents = ['North_America', 'Africa', 'Asia', 'Europe', 'Australia', 'South_America']
     for continent in continents:
-        image, answer_bank, answer = generate_q1(data, continent)
-        questions[continent] = {'image': image, 'answer_bank': answer_bank, 'person': answer}
+        image, answer_bank, player, answer_all = generate_q1(data, continent)
+        questions[continent] = {'image': image, 'answer_bank': answer_bank, 'question_bank': question_bank,
+            'player': player, 'answer_all': answer_all}
 
     return render_template('index.html', questions=json.dumps(questions))
-
-# Register the Blueprint with the Flask application
-app.register_blueprint(index_bp)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

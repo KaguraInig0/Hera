@@ -9,24 +9,23 @@
     <title>Home Page</title>
 </head>
 <body id="home-body">
-    <div class="navbar">
+    <!-- <div class="navbar">
+        <img class="overlay" src="static/images/stars.gif" alt="Second Image" id="stars-overlay-nav" hidden="hidden">
         <img src="/static/images/logo.png" alt="Mrs WorldWide Logo" class="logo-img">
         <button class="help-button" onclick="showHelp()">Help</button>
-    </div>
+    </div> -->
 
     <script>
         function clickHandler(id,value,delay)
         {
-            // document.getElementById('woosh-sound').setAttribute("autoplay");
             var audio = document.getElementById("woosh-sound");
             audio.play();
-            // document.getElementById('home-body').setAttribute('background-color', 'linear-gradient(#392f74, #756AB6')
-            // document.body.style.backgroundColor= 'linear-gradient(#392f74, #756AB6)';
             // document.getElementById('home-body').style.backgroundImage = 'linear-gradient(#392f74, #756AB6)';
             document.getElementById('space-btn').setAttribute("hidden", "hidden");
             document.getElementById('home-content').setAttribute("hidden", "hidden");
             document.getElementById('stars-overlay').setAttribute("hidden", "hidden");
             document.getElementById("space-overlay").removeAttribute("hidden");
+            // document.getElementById("stars-overlay-nav").removeAttribute("hidden");
             setTimeout( function() { actualFunction(id, value); }, delay );
         }
 
@@ -36,6 +35,11 @@
             document.getElementById("home-content").removeAttribute("hidden");
             document.getElementById("play-btn").removeAttribute("hidden");
             document.getElementById("stars-overlay").removeAttribute("hidden");
+            // document.getElementById("stars-overlay-nav").removeAttribute("hidden");
+        }
+
+        function showHelp() {
+            alert("This is HERA (Her Era).  Click on the Markers to learn about current and historical women!");
         }
     </script>
     <!-- on click hide this button and show the home -content -->
