@@ -14,7 +14,7 @@ def generate_q1(data, continent):
 
 @app.route('/')
 def index():
-    with open('MrsWRLDWide\womendata.json') as f:
+    with open('womendata.json') as f:
         data = json.load(f)
     questions = {}
     continents = ['North America', 'Africa', 'Asia', 'Europe', 'Australia', 'South America']
