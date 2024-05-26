@@ -83,12 +83,13 @@ function load_questions(questions) {
       popupContent += `<li><button id="${continent}" onclick="check(this, '${question}', '${questions[continent]["person"]}', '${continent}')" class='choice-btn'>${question}</button></li>`;
     });
 
-    popupContent += `
+    /*popupContent += `
                 </ul>
             </div>
             <button onclick="clicked(this, '${continent}')" class='popup-close-btn'>Close</button>
         </div>
     </div>`;
+    */
 
     marker.bindPopup(popupContent);
 
