@@ -38,7 +38,7 @@ def index():
     for continent in continents:
         image, answer_bank, player, answer_all = generate_q1(data, continent)
         questions[continent] = {'image': image, 'answer_bank': answer_bank, 'question_bank': question_bank,
-            'player': player, 'answer_all': answer_all, 'count': 0}
+            'player': player, 'answer_all': answer_all}
 
     return render_template('index.html', questions=json.dumps(questions))
 
