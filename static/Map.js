@@ -60,6 +60,7 @@ function check(button, ans, cont, correctAnswer) {
       cbutton.disabled = true;
     });
     count[lcont.indexOf(cont)] += 1;
+    clicked(button);
     generate(questions);
   } else {
     button.classList.add("wrong");

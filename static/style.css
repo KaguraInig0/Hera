@@ -41,7 +41,7 @@ html {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -72,9 +72,13 @@ html {
     flex: 1;
 }
 
+.question_banks {
+    width: 300px;
+}
+
 .popup-image img {
-    max-width: 100%;
-    height: auto;
+    max-width: auto;
+    height: 250px;
 }
 
 .popup-questions {
@@ -101,4 +105,142 @@ html {
 .popup-questions .wrong {
     background-color: red;
     color: white;
+}
+
+#home-body {
+    /* font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--light-purple); */
+    /* background-image: url("/static/images/Splash_Screen_V4.png"); */
+    background-color: var(
+        --light-purple
+    ); /* Used if the image is unavailable */
+    /* background-image: linear-gradient(var(--dark-purple), var(--pink)); */
+    background-image: linear-gradient(#392f74, #a39bd0);
+    height: 100vh; /* You must set a specified height */
+    width: 100vw;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+#darker-color {
+    background-image: linear-gradient(#3c226a, var(--dark-purple));
+}
+
+.image-container {
+    width: 100vw; /* Set container width to viewport width */
+    height: 100vh; /* Set container height to viewport height */
+    overflow: hidden; /* Hide overflow if image is larger than viewport */
+}
+
+#home-splash {
+    width: 100vw; /* Set image width to fill container */
+    height: 100vh; /* Set image height to fill container */
+    object-fit: cover; /* Maintain aspect ratio and cover entire container */
+    display: block;
+    margin: 0 auto;
+}
+
+#home-btn {
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+    position: absolute;
+    transition: transform 0.7s ease-in-out;
+    z-index: 1000;
+    top: 55%;
+    left: 45%;
+}
+
+#space-btn {
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: transparent;
+    position: absolute;
+    z-index: 1000;
+    top: 20%;
+    left: 32%;
+}
+
+#play-img {
+    width: 400px;
+    z-index: 1000;
+    position: relative;
+}
+
+#go-img {
+    width: 800px;
+    z-index: 1000;
+    position: relative;
+}
+
+#home-btn:hover {
+    transform: rotate(360deg);
+    /* z-index: 1000; */
+}
+
+#globe-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    max-height: 600px;
+}
+
+#logo-img {
+    position: absolute;
+    top: 200px;
+    left: 40%;
+    z-index: 600;
+    height: 25%;
+    /* max-height: 600px; */
+}
+
+@font-face {
+    font-family: "Heiti Tc"; /* Name your font family */
+    src: url("/static/heiti-tc-medium-maisfontes.78a0/heiti-tc-medium.ttf"); /* Locate the .ttf file within your directory*/
+}
+
+#home-slogan {
+    position: absolute;
+    top: 550px;
+    left: 45%;
+    z-index: 600;
+    /* height: 25%; */
+    font-size: x-large;
+    color: var(--pink);
+    font-family: "Heiti Tc", medium;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Set width to viewport width */
+    height: 100vh; /* Set height to viewport height */
+    object-fit: cover; /* Maintain aspect ratio and cover entire viewport */
+    mix-blend-mode: screen; /* Apply screen blend mode */
+    z-index: 1;
+}
+
+.leaflet-popup-content {
+    width: fit-content !important;
+    height: fit-content;
+}
+.popup-content {
+    flex-direction: row;
+    display: flex;
+    gap: 1rem;
 }

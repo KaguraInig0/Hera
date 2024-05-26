@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Blueprint, redirect, url_for
 import json, random
 
 question_bank = [
@@ -29,7 +29,24 @@ def generate_q1(data, continent):
 
     return image, answer_bank, player, answer_all
 
-@app.route('/')
+# Define a Blueprint for the new page
+home_bp = Blueprint('new_page', __name__, template_folder='templates')
+
+# Define a route for the new page (new_page.html)
+@home_bp.route('/')
+def home():
+    return render_template('home.html')
+
+# Register the Blueprint with the Flask application
+app.register_blueprint(home_bp)
+
+# Define a Blueprint for the index page
+index_bp = Blueprint('index_page', __name__, template_folder='templates')
+
+
+# Define a route for the index page (index.html)
+
+@app.route('/index')
 def index():
     with open('womendata.json') as f:
         data = json.load(f)
