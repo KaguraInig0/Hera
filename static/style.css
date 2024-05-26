@@ -1,8 +1,9 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 :root {
-    --dark-purple: #756AB6;
-    --light-purple: #AC87C5;
-    --plink: #E0AED0;
-    --pink: #FFE5E5;
+    --dark-purple: #756ab6;
+    --light-purple: #ac87c5;
+    --plink: #e0aed0;
+    --pink: #ffe5e5;
     background-color: var(--pink);
 }
 
@@ -11,74 +12,104 @@
     height: 100%;
 }
 
-p, h1 {
+p,
+h1 {
     color: var(--dark-purple);
 }
 
-body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden; /* Hide any overflow to prevent scrolling */
-            display: flex; /* Use flexbox to center the map */
-            flex-direction: column; /* Set flex direction to column */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            background-color: #756AB6; /* Set background color */
-        }
-        #map {
-            top: 40px;
-            width: 100vw; /* Set width to 100% of the viewport width */
-            height: 100vh; /* Set height to 100% of the viewport height */
-            background-color: #756AB6; /* Set background color of the map */
-        }
-        .navbar {
-            width: 100%;
-            background-color: var(--dark-purple); /* Set navbar background color */
-            color: white; /* Set navbar text color */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--light-purple); /* Add border to bottom */
-        }
-        .logo-img {
-            width: 150px; /* Set width of the logo */
-            height: auto; /* Maintain aspect ratio */
-            margin-right: auto; /* Push the logo to the right */
-            margin-left: calc(45%); /* Push the logo to the left */
-        }
-        .help-button {
-            background-color: var(--light-purple);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 10px; /* Add margin */
-            border: 2px solid var(--light-purple); /* Add border */
-}
-
-
-/*  */
-
-
-#home-body {
-    /* font-family: Arial, sans-serif;
+body,
+html {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden; /* Hide any overflow to prevent scrolling */
+    display: flex; /* Use flexbox to center the map */
+    flex-direction: column; /* Set flex direction to column */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #756ab6; /* Set background color */
+}
+#map {
+    width: 100vw; /* Set width to 100% of the viewport width */
+    height: 100vh; /* Set height to 100% of the viewport height */
+    background-color: #756ab6; /* Set background color of the map */
+}
+.navbar {
+    width: 100%;
+    background-color: var(--dark-purple); /* Set navbar background color */
+    color: white; /* Set navbar text color */
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    height: 100vh;
-    background-color: var(--light-purple); */
-    /* background-image: url("/static/images/Splash_Screen_V4.png"); */
-    background-color: var(--light-purple); /* Used if the image is unavailable */
-    /* background-image: linear-gradient(var(--dark-purple), var(--pink)); */
+    padding: 10px 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 2px solid var(--light-purple); /* Add border to bottom */
+}
+.logo-img {
+    width: 150px; /* Set width of the logo */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: auto; /* Push the logo to the right */
+    margin-left: calc(45%); /* Push the logo to the left */
+}
+.help-button {
+    background-color: var(--light-purple);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px; /* Add margin */
+    border: 2px solid var(--light-purple); /* Add border */
+}
+
+.custom-popup {
+    display: flex;
+}
+
+.popup-image {
+    flex: 1;
+}
+
+.question_banks {
+    width: 300px;
+}
+
+.popup-image img {
+    max-width: auto;
+    height: 250px;
+}
+
+.popup-questions {
+    flex: 1;
+    font-size: 10px;
+}
+
+.popup-questions ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.popup-questions .choice-btn {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.popup-questions .correct {
+    background-color: green;
+    color: white;
+}
+
+.popup-questions .wrong {
+    background-color: red;
+    color: white;
+}
+
+#home-body {
+    background-color: var(--light-purple); 
     background-image: linear-gradient(#392f74, #a39bd0);
     height: 100vh; /* You must set a specified height */
     width: 100vw;
@@ -105,7 +136,7 @@ body, html {
     margin: 0 auto;
 }
 
-#home-btn{
+#home-btn {
     margin: 0;
     padding: 0;
     border: none;
@@ -132,7 +163,7 @@ body, html {
     left: 32%;
 }
 
-#play-img{
+#play-img {
     width: 400px;
     z-index: 1000;
     position: relative;
@@ -151,35 +182,35 @@ body, html {
 
 #globe-img {
     position: absolute;
-    top:0;
-    left:0;
-    z-index:100;
-    max-height: 600px;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    max-height: 99%;
 }
 
 #logo-img {
     position: absolute;
     top: 200px;
     left: 40%;
-    z-index:600;
+    z-index: 600;
     height: 25%;
     /* max-height: 600px; */
 }
 
 @font-face {
-    font-family: 'Heiti Tc'; /* Name your font family */
-    src: url('/static/heiti-tc-medium-maisfontes.78a0/heiti-tc-medium.ttf'); /* Locate the .ttf file within your directory*/
+    font-family: "Heiti Tc"; /* Name your font family */
+    src: url("/static/heiti-tc-medium-maisfontes.78a0/heiti-tc-medium.ttf"); /* Locate the .ttf file within your directory*/
 }
 
 #home-slogan {
     position: absolute;
     top: 550px;
     left: 45%;
-    z-index:600;
+    z-index: 600;
     /* height: 25%; */
     font-size: x-large;
     color: var(--pink);
-    font-family: 'Heiti Tc', medium; 
+    font-family: "Heiti Tc", medium;
 }
 
 .overlay {
@@ -191,4 +222,14 @@ body, html {
     object-fit: cover; /* Maintain aspect ratio and cover entire viewport */
     mix-blend-mode: screen; /* Apply screen blend mode */
     z-index: 1;
+}
+
+.leaflet-popup-content {
+    width: fit-content !important;
+    height: fit-content;
+}
+.popup-content {
+    flex-direction: row;
+    display: flex;
+    gap: 1rem;
 }
