@@ -4,15 +4,12 @@ function clicked(popup) {
   popup.remove();
 }
 
-function check(button, ans, correctAnswer, cont) {
-  if (ans === correctAnswer) {
+function check(button, ans, cont, correctAnswer, count) {
+  if (ans == correctAnswer) {
     // Change button color to green
     button.classList.add("correct");
-    console.log(button);
     // Disable further selection
-    button.disabled = true;
     const buttons = document.querySelectorAll("#" + cont);
-    console.log(buttons);
     buttons.forEach((cbutton) => {
       cbutton.disabled = true;
     });
@@ -27,6 +24,7 @@ function check(button, ans, correctAnswer, cont) {
 
 function load_questions(questions) {
   // Initialize the map on the "map" div with a given center and zoom
+
   var map = L.map("map", {
     center: [0, 0], // Centered at (0, 0) (latitude, longitude)
     zoom: 2, // Initial zoom level
@@ -67,57 +65,38 @@ function load_questions(questions) {
   });
 
   // Show Continent Markers with the custom popup and custom icon
-  for (var continent in continents) {
+  for (let continent in continents) {
     var marker = L.marker(continents[continent], { icon: customIcon }).addTo(
       map,
     );
+
     var popupContent = `
      <div class='custom-popup'>
           <div class='popup-content'>
               <div class='popup-image'><img src='${questions[continent]["image"]}' alt='Continent Image'></div>
+                <div class='question_banks'>
+                      <h1>'${questions[continent]["question_bank"][questions[continent]["count"]]}'<h1>
+                <div>
                   <div class='popup-questions'>
                       <h3>Multiple Choice Questions:</h3>
                   <ul>`;
 
-    questions[continent]["answer_bank"].forEach(function (question) {
-      popupContent += `<li><button id="${continent}" onclick="check(this, '${question}', '${questions[continent]["person"]}', '${continent}')" class='choice-btn'>${question}</button></li>`;
-    });
+    questions[continent]["answer_bank"][questions[continent]["count"]].forEach(
+      function (question) {
+        popupContent += `<li><button id="${continent}" onclick="check(this, '${question}', '${continent}', '${questions[continent]["answer_all"][questions[continent]["count"]]}', '${questions[continent]["count"]}')" class='choice-btn'>${question}</button></li>`;
+      },
+    );
 
     popupContent += `
                 </ul>
             </div>
-            <button onclick="clicked(this, '${continent}')" class='popup-close-btn'>Close</button>
+            <button onclick="clicked(this)" class='popup-close-btn'>Close</button>
         </div>
     </div>`;
 
     marker.bindPopup(popupContent);
 
-    marker.on(
-      "popupopen",
-      function (e) {
-        var popup = e.popup;
-        var tempContainer = document.createElement("div");
-        tempContainer.innerHTML = popup.getContent();
-
-        var popupContent =
-          tempContainer.getElementsByClassName("custom-popup")[0];
-        var choiceButtons = popupContent.getElementsByClassName("choice-btn");
-
-        Array.from(choiceButtons).forEach(function (button) {
-          button.addEventListener("click", function () {
-            var selectedAnswer = button.textContent.trim();
-            var correctAnswer = questions[continent]["person"].trim();
-            check(button, selectedAnswer, correctAnswer, button.id);
-          });
-        });
-
-        var closeButton =
-          popupContent.getElementsByClassName("popup-close-btn")[0];
-        closeButton.addEventListener("click", function () {
-          clicked(popup);
-        });
-      }.bind(this),
-    );
+    marker.on("popupopen", function (e) {}.bind(this));
 
     marker.on("mouseover", function (e) {
       this.setIcon(customIconHover);

@@ -1,27 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="navbar">
-        <img src="/static/images/logo.png" alt="Mrs WorldWide Logo" class="logo-img">
-        <button class="help-button" onclick="showHelp()">Help</button>
-    </div>
+    <head>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css"
+        />
+        <link rel="stylesheet" href="static/style.css" />
+    </head>
+    <body>
+        <div class="navbar">
+            <img
+                src="static/images/logo.png"
+                alt="Mrs WorldWide Logo"
+                class="logo-img"
+            />
+            <button class="help-button" onclick="showHelp()">Help</button>
+        </div>
 
-    <div id="map"></div>
+        <div id="map"></div>
 
-    <!-- Include Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <!-- Your custom JavaScript -->
-    <script src="{{ url_for('static', filename='Map.js') }}"></script>
+        <!-- Include Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <!-- Your custom JavaScript -->
+        <script src="{{ url_for('static', filename='Map.js') }}"></script>
 
-    <script>
-        function showHelp() {
-            alert("This is HERA (Her Era).  Click on the Markers to learn about current and historical women!");
-        }
-        load_questions({{questions | safe }})
-    </script>
-</body>
+        <script>
+            function showHelp() {
+                alert("This is HERA (Her Era).  Click on the Markers to learn about current and historical women!");
+            }
+            load_questions({{questions | safe }})
+        </script>
+    </body>
 </html>
