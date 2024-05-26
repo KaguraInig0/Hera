@@ -1,5 +1,23 @@
 from flask import Flask, render_template, Blueprint, redirect, url_for
-import json, random
+import json, random, urllib.parse, os, requests
+from collections import defaultdict
+from google.cloud import storage
+
+JSON_CRED = 'CREDENTIALS GO HERE'
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = JSON_CRED
+storage_client = storage.Client()
+
+#   downloading from cloud
+def download_from_bucket(blob_name, file_path, bucket_name):
+    try:
+        bucket = storage_client.get_bucket(bucket_name)
+        blob = bucket.blob(blob_name)
+        with open(file_path, 'wb') as f:
+            storage_client.download_blob_to_file(blob, f)
+    except Exception as e:
+        print(e)
+        return False
 
 question_bank = [
     "Who is she?",
@@ -48,6 +66,9 @@ index_bp = Blueprint('index_page', __name__, template_folder='templates')
 
 @app.route('/index')
 def index():
+
+    file = 'womanndata.json'
+    download_from_bucket('womandata.json', file, 'YOURBUCKETNAME')
     with open('womendata.json') as f:
         data = json.load(f)
     questions = {}
