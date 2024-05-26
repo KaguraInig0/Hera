@@ -4,16 +4,27 @@ document.addEventListener('DOMContentLoaded', function () {
     
 })
 
-function clicked(cont) {
+function clicked(popup, cont) {
     console.log(cont, "LSLWFLEFELFLFWE")
+    popup.remove();
 }
 
-function check(ans) {
-    console.log(ans)
+function check(button, ans, correctAnswer) {
+    if (ans === correctAnswer) {
+        console.log("Correct!");
+        // Change button color to green
+        button.classList.add('correct');
+        // Disable further selection
+        button.disabled = true;
+    } else {
+        console.log("Wrong answer. Try again.");
+        // Perform actions for wrong answer, if needed
+        // For example, you can display a message or provide a hint
+    }
 }
 
 function load_questions(questions){
-    console.log(questions)
+    console.log(questions);
     // Initialize the map on the "map" div with a given center and zoom
     var map = L.map('map', {
         center: [0, 0], // Centered at (0, 0) (latitude, longitude)
@@ -41,9 +52,6 @@ function load_questions(questions){
     };
 
     // Define the custom popup content
-    var popupContent = "<div class='custom-popup'><img src='/static/images/Selena.jpeg' height='200px' alt='Custom Popup Image'></div>";
-
-    // Define a custom icon using your PNG asset
     var customIcon = L.icon({
         iconUrl: '/static/images/Map_marker_V2.png', // Default color
         iconSize: [64, 64],
@@ -59,25 +67,24 @@ function load_questions(questions){
     // Show Continent Markers with the custom popup and custom icon
     for (var continent in continents) {
         var marker = L.marker(continents[continent], {icon: customIcon}).addTo(map);
-        var popupContent = "<div class='custom-popup'>" +
-                                "<div class='popup-content'>" +
-                                    "<div class='popup-image'><img src='" + questions[continent]['image'] + "' alt='Continent Image'></div>" +
-                                    "<div class='popup-questions'>" +
-                                        "<h3>Multiple Choice Questions:</h3>" +
-                                        "<ul>";
+        var popupContent = `
+     <div class='custom-popup'>
+          <div class='popup-content'>
+              <div class='popup-image'><img src='${questions[continent]["image"]}' alt='Continent Image'></div>
+                  <div class='popup-questions'>
+                      <h3>Multiple Choice Questions:</h3>
+                  <ul>`;
     
         questions[continent]['answer_bank'].forEach(function(question) {
-            popupContent += `<li><button onclick="check('${question}')"class='choice-btn'>${question}</button></li>`})
+            popupContent += `<li><button onclick="check(this, '${question}', '${questions[continent]['person']}')" class='choice-btn'>${question}</button></li>`;
+        });
 
         popupContent += `    
                 </ul>
             </div>
-        <button onclick="clicked('${continent}')" class='popup-close-btn'>Close</button>
+            <button onclick="clicked(this, '${continent}')" class='popup-close-btn'>Close</button>
         </div>
-    </div>`
-
-    
-        marker.bindPopup(popupContent);
+    </div>`;
 
         marker.bindPopup(popupContent);
 
@@ -91,26 +98,17 @@ function load_questions(questions){
         
             Array.from(choiceButtons).forEach(function(button) {
                 button.addEventListener('click', function() {
-                    console.log('clicked')
-                    var selectedAnswer = button.textContent.trim(); // Trim to remove extra spaces
-                    var correctAnswer = questions[continent]['person'].trim(); // Trim to remove extra spaces
-                    if (selectedAnswer === correctAnswer) {
-                        button.classList.add('correct');
-                    } else {
-                        button.classList.add('wrong');
-                    }
-                    // Disable further selection after an answer is chosen
-                    Array.from(choiceButtons).forEach(function(btn) {
-                        btn.disabled = true;
-                    });
+                    var selectedAnswer = button.textContent.trim();
+                    var correctAnswer = questions[continent]['person'].trim();
+                    check(button, selectedAnswer, correctAnswer);
                 });
             });
         
             var closeButton = popupContent.getElementsByClassName('popup-close-btn')[0];
             closeButton.addEventListener('click', function() {
-                popup.remove();
+                clicked(popup);
             });
-        });
+        }.bind(this));
 
         marker.on('mouseover', function(e) {
             this.setIcon(customIconHover);
@@ -132,4 +130,4 @@ function load_questions(questions){
         map.panInsideBounds(bounds, { animate: false });
     });
 
-};
+}

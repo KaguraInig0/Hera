@@ -6,10 +6,8 @@ app = Flask(__name__, static_folder='static')
 def generate_q1(data, continent):
     question_data = data.get(continent, {})
     answer = random.choice(list(question_data.keys()))
-    all  = list(question_data.keys())
-    all.remove(answer)
-    answer_bank = all + [answer]
-
+    answer_bank = list(question_data.keys())
+    random.shuffle(answer_bank)
     image = question_data[answer]['Image']
 
     return image, answer_bank, answer
