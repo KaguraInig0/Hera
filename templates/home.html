@@ -1,0 +1,67 @@
+<!-- new_page.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body id="home-body">
+    <div class="navbar">
+        <img src="/static/images/logo.png" alt="Mrs WorldWide Logo" class="logo-img">
+        <button class="help-button" onclick="showHelp()">Help</button>
+    </div>
+
+    <script>
+        function clickHandler(id,value,delay)
+        {
+            // document.getElementById('woosh-sound').setAttribute("autoplay");
+            var audio = document.getElementById("woosh-sound");
+            audio.play();
+            // document.getElementById('home-body').setAttribute('background-color', 'linear-gradient(#392f74, #756AB6')
+            // document.body.style.backgroundColor= 'linear-gradient(#392f74, #756AB6)';
+            // document.getElementById('home-body').style.backgroundImage = 'linear-gradient(#392f74, #756AB6)';
+            document.getElementById('space-btn').setAttribute("hidden", "hidden");
+            document.getElementById('home-content').setAttribute("hidden", "hidden");
+            document.getElementById('stars-overlay').setAttribute("hidden", "hidden");
+            document.getElementById("space-overlay").removeAttribute("hidden");
+            setTimeout( function() { actualFunction(id, value); }, delay );
+        }
+
+        function actualFunction(id, value)
+        {
+            document.getElementById('space-overlay').setAttribute("hidden", "hidden");
+            document.getElementById("home-content").removeAttribute("hidden");
+            document.getElementById("play-btn").removeAttribute("hidden");
+            document.getElementById("stars-overlay").removeAttribute("hidden");
+        }
+    </script>
+    <!-- on click hide this button and show the home -content -->
+
+    <!-- <input id='space-btn' type='button'
+        onclick='clickHandler(this.id,this.value,5000);'
+        value="Let's Get Started" /> -->
+
+    <button id="space-btn" class="hm-btn" onclick='clickHandler(this.id, this.value, 4000);'>
+        <img src="/static/images/Go.png" id="go-img" alt="go button" border="0" class="btn-img"/>
+    </button>
+
+    <audio preload id="woosh-sound" src="/static/ericWoosh.m4a"></audio>
+
+    <img class="overlay" src="static/images/Hyperspace.gif" alt="space overlay" hidden="hidden" id="space-overlay">
+
+    <div id="home-content">
+        <img class="overlay" src="static/images/stars.gif" alt="Second Image" id="stars-overlay">
+        <img src="/static/images/logo.png" id="logo-img" alt="logo" border="0" />
+        <div id="play-btn" hidden="hidden" class="hm-btn">
+            <a href="/index"><button id="home-btn">
+                <img src="/static/images/Play_Button_V1.png" id="play-img" alt="play button" border="0" class="btn-img"/>
+            </button></a>
+        </div>
+        <p id="home-slogan">Women across the globe and their stories</p>
+        <img src="/static/images/Globe.png" id="globe-img" alt="globe" border="0" />
+    </div>
+</body>
+</html>
