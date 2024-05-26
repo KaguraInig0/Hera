@@ -19,6 +19,7 @@
             background-color: #f0f0f0;
         }
         .image-container {
+            position: relative;
             width: 100vw; /* Set container width to viewport width */
             height: 100vh; /* Set container height to viewport height */
             overflow: hidden; /* Hide overflow if image is larger than viewport */
@@ -30,14 +31,25 @@
             display: block;
             margin: 0 auto;
         }
+        /* Screen blend mode overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw; /* Set width to viewport width */
+            height: 100vh; /* Set height to viewport height */
+            object-fit: cover; /* Maintain aspect ratio and cover entire viewport */
+            mix-blend-mode: screen; /* Apply screen blend mode */
+        }
     </style>
 </head>
 <body>
     <div class="image-container">
         <!-- Replace 'image.jpg' with the path to your image -->
         <img src="static/images/Splash_Screen_V4.png" alt="Image">
-        <a href = "index.html"><button id="home-btn">Play</button></a>
+        
+        <!-- Second image -->
+        <img class="overlay" src="static/images/stars.gif" alt="Second Image">
     </div>
-    
 </body>
 </html>
